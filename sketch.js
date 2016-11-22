@@ -1,7 +1,9 @@
 
 
-var lastKnobPosition = 0,
-    currentPosition;
+var lastKnobPosition = 0;
+var currentPosition;
+var origRoseWidth;
+var origRoseHeight;
 
 //console.log("Last position: " + lastKnobPosition);
 
@@ -16,19 +18,87 @@ p5.midi.onInput = function(event) {
 
 }
 
+
+function preload()
+{
+    // load image
+    rose = loadImage("images/rose.png");
+    stars = loadImage("images/star-bg.jpg");
+
+}
+
+
+function setup() {
+
+    origRoseWidth = rose.width;
+    origRoseHeight = rose.height;
+
+    createCanvas(640, 480);
+    textFont('arial', 48);
+    textAlign(LEFT);
+
+    /*
+    test = createImage(640, 480);
+    test.loadPixels();
+
+    var r = 20;
+    var g = 40;
+    var b = 156;
+
+
+    console.log(r,g,b,a);
+
+    for(var x = 0; x < test.width; x++) {
+        for(var y = 0; y < test.height; y++) {
+            var a = map(y, 0, test.height, 255, 0);
+            test.set(x, y, [r, g, b, a]);
+        }
+    }
+
+    test.updatePixels();
+    */
+}
+
+
+function draw() {
+    // background(255);
+
+    // display background image
+    image(stars, 0, 0);
+    // image(rose,mouseX,mouseY); // draws the image at the specified x and y location
+    image(rose,canvas.width/2-rose.width/2,canvas.height/2-rose.height/2); // draws the image at the specified x and y location
+    // replace this with midi control
+    // image(test, mouseX-test.width/2, mouseY-test.height/2);
+    //image(test, 0, 0);
+
+
+    //console.log(rose);
+
+}
+
+
 function knob(event) {
 
-    var currentPosition = event.data[2];
+    //var currentPosition = event.data[2];
 
-    console.log("Current position: " + currentPosition);
-    console.log("Last position: " + lastKnobPosition);
-
+    //console.log("Current position: " + currentPosition);
+    //console.log("Last position: " + lastKnobPosition);
+/*
     if (event.data[0] == 176) {
         console.log("knob turn");
         var knobValue = event.data;
         text('knob' + knobValue, 220, 150);
     }
+*/
+    newWidth = (origRoseWidth/127) * event.data[2];
+    newHeight = (origRoseHeight/127) * event.data[2];
+    console.log(newWidth);
 
+    rose.resize(newWidth, newHeight);
+
+
+
+    /*
     if (lastKnobPosition >= currentPosition ) {
         console.log("knob down");
         var knobStatus = "Knob Down";
@@ -40,8 +110,9 @@ function knob(event) {
         var knobStatus = "Knob Up";
         text(knobStatus, 320, 50);
     }
+    */
 
-    lastKnobPosition = currentPosition;
+    //lastKnobPosition = currentPosition;
 
 }
 
@@ -67,12 +138,4 @@ function pad() {
         text(padStatus, 10, 50);
     }
 
-}
-
-
-
-function setup() {
-    createCanvas(640, 480);
-    textFont('arial', 48);
-    textAlign(LEFT);
 }
