@@ -1,9 +1,10 @@
 
-
 var lastKnobPosition = 0;
 var currentPosition;
 var origRoseWidth;
 var origRoseHeight;
+var myHtml;
+var indPadItem;
 
 //console.log("Last position: " + lastKnobPosition);
 
@@ -13,9 +14,10 @@ p5.midi.onInput = function(event) {
 
     console.dir(event);
 
-    pad();
+    pad(event);
     knob(event);
 
+    createPads(event);
 }
 
 
@@ -28,12 +30,25 @@ function preload()
 }
 
 
-function setup() {
+function setup(event) {
 
     origRoseWidth = rose.width;
     origRoseHeight = rose.height;
 
-    createCanvas(640, 480);
+    var myCanvas = createCanvas(640, 480, 'world');
+    myCanvas.parent('myCanvas');
+
+    myHtml = createDiv('This is an HTML string!');
+    myHtml.position(10, 10);
+    myHtml.class("customText");
+    myHtml.style("font-family", "monospace");
+    myHtml.style("background-color", "#FF0000");
+    myHtml.style("color", "#FFFFFF");
+    myHtml.style("font-size", "18pt");
+    myHtml.style("padding", "6px");
+    myHtml.parent('myCanvas');
+
+
     textFont('arial', 48);
     textAlign(LEFT);
 
@@ -57,6 +72,7 @@ function setup() {
 
     test.updatePixels();
     */
+
 }
 
 
@@ -64,9 +80,9 @@ function draw() {
     // background(255);
 
     // display background image
-    image(stars, 0, 0);
+    //image(stars, 0, 0);
     // image(rose,mouseX,mouseY); // draws the image at the specified x and y location
-    image(rose,canvas.width/2-rose.width/2,canvas.height/2-rose.height/2); // draws the image at the specified x and y location
+    //image(rose,canvas.width/2-rose.width/2,canvas.height/2-rose.height/2); // draws the image at the specified x and y location
     // replace this with midi control
     // image(test, mouseX-test.width/2, mouseY-test.height/2);
     //image(test, 0, 0);
@@ -78,28 +94,25 @@ function draw() {
 
 
 function knob(event) {
-
-    //var currentPosition = event.data[2];
-
-    //console.log("Current position: " + currentPosition);
-    //console.log("Last position: " + lastKnobPosition);
 /*
+    var currentPosition = event.data[2];
+
+    console.log("Current position: " + currentPosition);
+    console.log("Last position: " + lastKnobPosition);
+
     if (event.data[0] == 176) {
         console.log("knob turn");
         var knobValue = event.data;
         text('knob' + knobValue, 220, 150);
-    }
-*/
-    newWidth = (origRoseWidth/127) * event.data[2];
-    newHeight = (origRoseHeight/127) * event.data[2];
-    console.log(newWidth);
+    }*/
 
-    rose.resize(newWidth, newHeight);
+    //newWidth = (origRoseWidth/127) * event.data[2];
+    //newHeight = (origRoseHeight/127) * event.data[2];
+    //console.log(newWidth);
 
+    //rose.resize(newWidth, newHeight);
 
-
-    /*
-    if (lastKnobPosition >= currentPosition ) {
+    /*if (lastKnobPosition >= currentPosition ) {
         console.log("knob down");
         var knobStatus = "Knob Down";
         text(knobStatus, 220, 50);
@@ -110,12 +123,10 @@ function knob(event) {
         var knobStatus = "Knob Up";
         text(knobStatus, 320, 50);
     }
-    */
 
-    //lastKnobPosition = currentPosition;
-
+    lastKnobPosition = currentPosition;
+*/
 }
-
 
 
 function pad() {
@@ -139,3 +150,22 @@ function pad() {
     }
 
 }
+
+
+function createPads(event) {
+
+    var indPadItem = event.data[1];
+    console.log(event.data[1]);
+
+    for (var x = 9; x <= 16; x++) {
+        console.log('print padItem');
+    }
+
+    pads = createDiv(indPadItem);
+    pads.class("padItem");
+    pads.parent('myCanvas');
+
+}
+
+
+

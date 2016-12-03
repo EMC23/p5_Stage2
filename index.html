@@ -8,12 +8,50 @@
   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
   crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.js"></script>
+    <script src="lib/p5.dom.js"></script>
     <script src="lib/p5.midi.js"></script>
     <script src="lib/p5.speech.js"></script>
     <script src="custom.js"></script>
     <script src="sketch.js"></script>
+
+    <style>
+        #myCanvas {
+            text-align: center;
+            position: relative;
+        }
+        #myCanvas canvas {
+            margin: 0 auto;
+        }
+        .customText {
+            position: absolute;
+        }
+        .padItem {
+            width: 70px;
+            height: 70px;
+            background-color: #999;
+            border: 3px solid #666;
+            text-align: center;
+            color: #fff;
+            font-weight:700;
+            font-size: 24px;
+            line-height:64px;
+            font-family: "monospace";
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            float: left;
+            margin-right: 10px;
+        }
+    </style>
+
+
+
 </head>
 <body>
+
+<div id="myCanvas">
+
+</div>
 
 </body>
 </html>
