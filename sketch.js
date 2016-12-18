@@ -6,18 +6,22 @@ var origRoseHeight;
 var myHtml;
 var indPadItem;
 
+var padWidth = 67;
+var padHeight = 67;
+var padX = 0;
+var padY = 0;
+var padNumber = 9;
+
 //console.log("Last position: " + lastKnobPosition);
 
 p5.midi.onInput = function(event) {
     clear();
-    strokeWeight(0);
 
     console.dir(event);
 
     pad(event);
     knob(event);
 
-    createPads(event);
 }
 
 
@@ -32,12 +36,15 @@ function preload()
 
 function setup(event) {
 
-    origRoseWidth = rose.width;
-    origRoseHeight = rose.height;
 
     var myCanvas = createCanvas(640, 480, 'world');
     myCanvas.parent('myCanvas');
 
+
+    origRoseWidth = rose.width;
+    origRoseHeight = rose.height;
+
+/*
     myHtml = createDiv('This is an HTML string!');
     myHtml.position(10, 10);
     myHtml.class("customText");
@@ -47,7 +54,7 @@ function setup(event) {
     myHtml.style("font-size", "18pt");
     myHtml.style("padding", "6px");
     myHtml.parent('myCanvas');
-
+*/
 
     textFont('arial', 48);
     textAlign(LEFT);
@@ -59,7 +66,6 @@ function setup(event) {
     var r = 20;
     var g = 40;
     var b = 156;
-
 
     console.log(r,g,b,a);
 
@@ -73,10 +79,12 @@ function setup(event) {
     test.updatePixels();
     */
 
+    createPads(event);
 }
 
 
 function draw() {
+
     // background(255);
 
     // display background image
@@ -87,9 +95,7 @@ function draw() {
     // image(test, mouseX-test.width/2, mouseY-test.height/2);
     //image(test, 0, 0);
 
-
     //console.log(rose);
-
 }
 
 
@@ -131,6 +137,8 @@ function knob(event) {
 
 function pad() {
 
+    console.log(event.data[1]);
+
     if (event.data[0] == 128 || event.data[0] == 144) {
         console.log('pad tap');
         var padValue = event.data;
@@ -154,12 +162,34 @@ function pad() {
 
 function createPads(event) {
 
-    var indPadItem = event.data[1];
-    console.log(event.data[1]);
+
+    //console.log(event.data[1]);
+    var indPadItem = 9;
+
 
     for (var x = 9; x <= 16; x++) {
-        console.log('print padItem');
+        console.log(x);
+            stroke(100);
+            strokeWeight(4);
+            fill(153);
+            rect(padX, padY, padWidth, padHeight);
+            textSize(24);
+            textAlign(CENTER, CENTER);
+            textWidth(padWidth);
+            textFont('monospace');
+            fill(0);
+            stroke(255);
+            strokeWeight(1);
+            text(indPadItem, padX + padWidth/2, padHeight/2);
+
+
+        indPadItem = indPadItem + 1;
+
+        padX = padX + padWidth;
+
+
     }
+
 
     pads = createDiv(indPadItem);
     pads.class("padItem");
